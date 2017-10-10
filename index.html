@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Snake</title>
 	<style>
+		h1 { margin: 0; padding: 0; }
 		.snake-main, .snake-end{ background:rgba(255, 255, 255, .6); left:0; position:absolute; text-align:center; top:0 }
 		.snake-header{ padding:10px; }
 		.snake-point{ color:#0892d0; font-size:20px; font-weight:bold; margin:0; }
@@ -14,6 +15,9 @@
 		.gold-apple{ background:#FFD700 }
 		.purple-apple, .snake-toxic{ background:#800080 }
 		.black-apple{ background:#000000 }
+		#rules { list-style: none; margin: 0 auto; text-align: left; width: 150px; }
+		#rules li { margin-bottom: 15px; }
+		#rules .apple { display: inline-block; margin-right: 10px; position: relative; vertical-align: middle; z-index: 1; }
 	</style>
 </head>
 <body class="snake-board">
@@ -31,6 +35,11 @@
 				<td><h1>Snake Game</h1></td>
 			</tr>
 			<tr>
+				<td>
+					<ul id="rules"></ul>
+				</td>
+			</tr>
+			<tr>
 				<td>Press an arrow key to start.</td>
 			</tr>
 		</table>
@@ -46,7 +55,9 @@
 		</table>
 	</div>
 </body>
-<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
 <script type="text/javascript">
 	var start = false;
 	var die = false;
@@ -77,6 +88,7 @@
 		}},
 		{'type':'black', 'point':-300, 'time':20}
 	];
+
 	var type = [];
 	//timer
 	var timer = null;
@@ -85,6 +97,17 @@
 	var appleCreateCounter = 0;
 	/* listener */
 	$(function(){
+		for (var i of appleType) {
+			console.log(i);
+			var { type: type, point: point } = i;
+			var div = $('<div>').addClass('rules').addClass('apple').addClass(`${type}-apple`);
+			var span = $('<span>').text(`${point} points`);
+			var li = $('<li>');
+			li.append(div);
+			li.append(span);
+			$('#rules').append(li);
+		}
+
 		initialBoard();
 	});
 	//keydown
@@ -292,7 +315,7 @@
 		$('.snake-end').show();
 		//Stop game
 		window.clearInterval(timer);
-		$('.apple').remove();
+		$('.apple:not(.rules)').remove();
 	}
 </script>
 </html>
