@@ -1,2 +1,2 @@
-# snake.github.io
-Snake game
+# snake
+[Snake game](http://pqab.github.io/snake)
